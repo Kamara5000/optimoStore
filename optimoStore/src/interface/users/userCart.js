@@ -50,8 +50,8 @@ const UserCart=(props)=>{
     return(
         <React.Fragment>
                     <h3>YOUR CARTED GOOD ARE HERE</h3>
-                   <h5>YOU HAVE CARTED {props.myGoods.length} ITEMS</h5>
-                   <h6>Total price ${props.myNum}</h6>
+                   <h5>Subtotal ({props.myGoods.length} item): ${props.myNum} </h5>
+                
                       <div className="card-deck" >
                       
                       {props.myGoods.map((product,i)=>(
