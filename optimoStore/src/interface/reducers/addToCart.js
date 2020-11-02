@@ -1,4 +1,4 @@
-
+  
     
 const addToCart = (state=[], action)=>{
     
@@ -19,6 +19,20 @@ const addToCart = (state=[], action)=>{
           //console.log(k)
 
          let  j = [...state,action.payload];
+          let product = action.payload;
+         let local = JSON.parse(localStorage.getItem("cart"));
+         if (local) {
+            local = [...local,product];
+           localStorage.setItem("cart",JSON.stringify(local));
+         }else{
+   
+          
+           localStorage.setItem("cart",JSON.stringify(j));
+         }
+
+
+
+         
           console.log(j)
 
         return j ;
@@ -26,8 +40,14 @@ const addToCart = (state=[], action)=>{
     }
 
     else if (action.type==="DELCART") {
-      let delCart=state.filter((product,index)=>index !=action.payload);
-      return delCart;
+      
+            let local = JSON.parse(localStorage.getItem("cart"));
+            let delCart=local.filter((product,index)=>index !=action.payload);
+            localStorage.setItem("cart",JSON.stringify(delCart));
+
+          return JSON.parse(localStorage.getItem("cart"));;
+
+      
     }
     else{
         return state;

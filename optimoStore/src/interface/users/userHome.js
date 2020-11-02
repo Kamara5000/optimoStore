@@ -46,13 +46,17 @@ const UserHome=(props)=>{
     //let myCart= myProducts.filter((products,index)=>index === i);
     //let mycar =[...cart,myCart]
     //handleCart([...cart].concat(myCart))
-    //handleCart([...cart,product])
+    handleCart([...cart,product]);
+
+    
     //const price = Number(product.product_price)
     //handleTotal(total+price);
     //document.getElementById("check").hidden=false;
     props.myC(product);
       const price = Number(product.product_price);
-      props.myTotal(price)  
+      props.myTotal(price); 
+
+      
 
   }
 
@@ -66,11 +70,13 @@ const UserHome=(props)=>{
 
         return(
             <React.Fragment>
-             <div className="card-deck" >
+             <div className="card-deck  " style={{backgroundColor:  '#EAEDED'}} >
                    { myProducts.map((product,i)=>(
                        <div key={i} >
-                           <div className="card border-info mb-3  ">
-                        <img src={`http://localhost/react/optimobackend/uploads/${product.product_image_name}`} className="card-img-top" alt={product.product_name} />
+                          <div  className="card border-info mb-3" style={{width: 20+'rem', height: 30+'rem'}}>
+                        <div style={{margin:'auto'}}>
+                          <img style={{maxWidth: 18+'rem', height: 18+'rem'}}src={`http://localhost/react/optimobackend/uploads/${product.product_image_name}`} className="card-img-top" alt={product.product_name} />
+                        </div>
                          <div className="card-body">
                          <h5 className="card-title">{product.product_name}</h5>
                           <p className="card-text">price ${product.product_price}</p>

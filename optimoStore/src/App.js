@@ -46,8 +46,7 @@ class App extends Component {
         
         <div>     
         <BrowserRouter>
-        <Navbar> 
-       </Navbar>
+        <Navbar></Navbar>
         <Switch>
         <Route exact path="/" component={About}/>
         

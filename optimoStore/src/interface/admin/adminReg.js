@@ -87,13 +87,13 @@ const AdminReg=(props)=>{
     <div className="form-group">
     <label >Username</label>
     <input type="text" name="username" placeholder="Enter your username"
-     className="form-control" onChange={handleSet}/>
+     className="form-control w-25" onChange={handleSet}/>
     
     </div>
      <div className="form-group">
     <label >Password</label>
     <input type="password" name="password" placeholder="Enter your password" 
-    className="form-control" onChange={handleSet}/>
+    className="form-control w-25" onChange={handleSet}/>
     <small id="emailHelp" className="form-text text-muted">We'll never share your password with anyone else.</small>
   </div>
   <button type="submit"  className="btn btn-primary" onClick={handleSubmit} >Log In</button>
