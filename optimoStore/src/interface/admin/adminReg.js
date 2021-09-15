@@ -50,6 +50,7 @@ const AdminReg=(props)=>{
                password: pass,
                username: user,
         };
+        console.log(m);
             
         axios.post('//localhost:80/react/optimoBackend/adminlog.php',m)
         .then(response=>{console.log(response.data); 

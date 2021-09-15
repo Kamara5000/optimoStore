@@ -24,7 +24,7 @@ const AdminDash=(props)=>{
             m.append("product_name",x);
             m.append("product_details",z);
             m.append("product_price",y);
-            m.append("no_available",k)
+            m.append("no_available",k);
             
             console.log(m)
      //axios.post('//localhost:80/react/optimoBackend/adminpost.php',m)

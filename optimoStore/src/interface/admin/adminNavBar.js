@@ -26,7 +26,7 @@ const AdminNavBar=(props)=>{
       <Link className="nav-link" to="/adminLog/adminReg">Register</Link>
     </li>
     <li className="nav-item">
-      <Link className="nav-link" to="/UserCart">UserCart</Link>
+      <Link className="nav-link" to="">Profile</Link>
     </li>
     <li className="nav-item">
       <Link className="nav-link" to="">Orders</Link>

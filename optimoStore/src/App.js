@@ -14,10 +14,12 @@ import AdminLog from './interface/admin/adminLog';
 import AdminPost from './interface/admin/adminPost';
 import UserReg from './interface/users/userReg';
 import UserCart from './interface/users/userCart';
+import UserOrder from './interface/users/userOrders';
 import UserCheckOut from './interface/users/userCheckOut';
 import UserLog from './interface/users/userLog';
 import adminDash from './interface/admin/adminDash';
 import adminDashBoard from './interface/admin/adminDashBoard';
+import Footer from './interface/footer';
 
 
 //import SecondReduxFunction from './interface/secondReduxFunction'
@@ -46,9 +48,9 @@ class App extends Component {
         
         <div>     
         <BrowserRouter>
-        <Navbar></Navbar>
+        <Navbar ></Navbar>
         <Switch>
-        <Route exact path="/" component={About}/>
+        <Route exact path="/" component={UserHome}/>
         
         <Route path="/First" component={UserHome} />
         <Route path="/First" component={adminDash} />
@@ -56,6 +58,7 @@ class App extends Component {
         <Route path="/UserCart" component={UserCart} />
         <Route path="/UserCheckout" component={UserCheckOut} />
         <Route path="/UserLog" component={UserLog} />
+        <Route path="/UserOrder" component={UserOrder} />
         <Route path="/AdminReg" component={AdminReg} />
         <Route path="/AdminLog" component={AdminLog} />
         <Route path="/AdminPost" component={AdminPost} />
@@ -64,11 +67,12 @@ class App extends Component {
         <Route path="/adminDash" component={adminDash} />
         <Route  path="/about"  render = {props=><About {...props} checkSignIn={this.state.signIn} />} />
         <Route path="/UserHome" render ={props=><UserHome {...props} checkSignIn={this.state.signIn}/>}/>
-      <Route path="/caller" render={props=><Caller {...props} checkSignIn={this.state.signIn}/>} />
+        <Route path="/caller" render={props=><Caller {...props} checkSignIn={this.state.signIn}/>} />
 
         
         <Route  component={Notexist}/>
         </Switch>
+        <Footer/>
         </BrowserRouter>
        </div>
       );
