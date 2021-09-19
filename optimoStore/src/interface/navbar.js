@@ -1,24 +1,26 @@
 import React, {Component, useEffect, useState} from 'react';
 import {Link,NavLink} from "react-router-dom";
 import {connect} from 'react-redux';
+import { logOut } from './actions';
 //import {mycart,mydel} from '../actions/addPro';
 
 
 const Navbar =(props)=>{
 
-
-  let [myVal, handleMyval]= useState(0)
-    useEffect(()=>{
-      // let x = JSON.parse(localStorage.getItem('cart'))
-      handleMyval(props.myGoods)
-    },[myVal,props.myGoods])
+let [myVal, handleMyval]= useState(0);
+let [reload, setReload] = useState(false);
+    
+useEffect(()=>{
+      handleMyval(props.myGoods);
+    },[myVal,props.myGoods,props.log])
 
     console.log(props.myGoods);
+    console.log(props.log)
     
-    // const change=()=>{
-    //     handleMyval(myVal+1)
-    // }
-
+    
+    const logUserOut=()=>{
+      props.userLogOut();
+   }
 
   return(
     <React.Fragment>
@@ -36,26 +38,24 @@ const Navbar =(props)=>{
             </div>
 
           <div className="collapse navbar-collapse w-100 "  id="navbarNav">
-            <ul className="nav  justify-content-end ">
+            <ul className="nav  justify-content-end w-100">
               <li className="nav-item ">
-                <NavLink className="nav-link  "  activeClassName="active"   to="UserHome">Home</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link " activeClassName="active"     to="/adminDash">Dash</NavLink>
+                <NavLink className="nav-link  "  activeClassName="active"   to="/UserHome">Home</NavLink>
             </li>
             <li className="nav-item">
               <NavLink className="nav-link "  to="/AdminReg">Admin</NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link " activeClassName="active"   to="/adminPost"> Post</NavLink>
-            </li>
+          
            <li className="nav-item">
              <NavLink className="nav-link " activeClassName="active"   to="/UserOrder">Orders</NavLink>
           </li>
-          <li className="nav-item">
-              <NavLink className="nav-link" activeClassName="active"    to="/UserReg">SignIn</NavLink>
-            </li>
-            <li className="nav-item" >
+          
+          {!props.log && <li className="nav-item">
+              <NavLink className="nav-link" activeClassName="active"    to="/UserReg">Sign In</NavLink>
+          </li>
+          }
+          
+          <li className="nav-item" >
             <NavLink className="nav-link" activeClassName="active"   to="/UserCart">
               <span className="fa-stack">
                   <span className="fa fa-shopping-cart fa-stack-2x"></span>
@@ -63,9 +63,19 @@ const Navbar =(props)=>{
                      {myVal?.length}
                      </strong>
                  </span>
-                <span>cart</span>
+                <span>Cart</span>
                 </NavLink>
           </li>
+          {props.log && <li>
+            <Link className="nav-link"     to="/userReg" style={{padding:'0',margin:'0',maxWidth: ""}}>
+                    <button onClick={logUserOut} type="button" className="btn btn-sm hover-item" style={{height:'',width: "90px",borderRadius:"50px", fontSize:""}}>
+                       <i className="fa fa-sign-out mr-1 " ></i>
+                       Sign Out
+                    </button>
+                  </Link>
+            </li>
+          }
+            
       </ul>
 </div>
 
@@ -81,14 +91,14 @@ const Navbar =(props)=>{
 
 const mapStateToProps =state=>{
   return({
-      myNum:state.num,
+      log:state.log,
       myGoods: state.addToCart
   })
 }
 
 const addFunctionToRedux=dispatch=>{
   return {
-     // delCart: (i)=>dispatch(mydel(i))
+     userLogOut: ()=>dispatch(logOut())
         }
 }
 

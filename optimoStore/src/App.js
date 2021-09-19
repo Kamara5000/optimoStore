@@ -5,21 +5,18 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import About from "./interface/about";
 import Notexist from "./interface/notexist";
 import Navbar from "./interface/navbar";
-import Caller from "./interface/caller";
-
 import UserHome from './interface/users/userHome';
-import AdminDashBoard from './interface/admin/adminDashBoard';
 import AdminReg from './interface/admin/adminReg';
-import AdminLog from './interface/admin/adminLog';
 import AdminPost from './interface/admin/adminPost';
 import UserReg from './interface/users/userReg';
 import UserCart from './interface/users/userCart';
 import UserOrder from './interface/users/userOrders';
 import UserCheckOut from './interface/users/userCheckOut';
 import UserLog from './interface/users/userLog';
-import adminDash from './interface/admin/adminDash';
-import adminDashBoard from './interface/admin/adminDashBoard';
 import Footer from './interface/footer';
+import AdminHome from './interface/admin/adminHome';
+import AdminAddProduct from './interface/admin/adminAddProduct';
+import AdminProfile from './interface/admin/adminProfile';
 
 
 //import SecondReduxFunction from './interface/secondReduxFunction'
@@ -32,13 +29,7 @@ class App extends Component {
     
  }
 
- handleSignIn=()=>{
-     this.setState({signIn:true});
- }
 
- handleSignOut=()=>{
-     this.setState({signIn:false});
- }
 
 
     render(){
@@ -51,25 +42,18 @@ class App extends Component {
         <Navbar ></Navbar>
         <Switch>
         <Route exact path="/" component={UserHome}/>
-        
-        <Route path="/First" component={UserHome} />
-        <Route path="/First" component={adminDash} />
         <Route path="/UserReg" component={UserReg} />
         <Route path="/UserCart" component={UserCart} />
         <Route path="/UserCheckout" component={UserCheckOut} />
         <Route path="/UserLog" component={UserLog} />
         <Route path="/UserOrder" component={UserOrder} />
+        <Route path="/admin/home" component={AdminHome}/>
         <Route path="/AdminReg" component={AdminReg} />
-        <Route path="/AdminLog" component={AdminLog} />
         <Route path="/AdminPost" component={AdminPost} />
-        <Route path="/adminDashboard" component={adminDashBoard} />
-        <Route path="/reduxFunction" component={UserHome} />
-        <Route path="/adminDash" component={adminDash} />
-        <Route  path="/about"  render = {props=><About {...props} checkSignIn={this.state.signIn} />} />
-        <Route path="/UserHome" render ={props=><UserHome {...props} checkSignIn={this.state.signIn}/>}/>
-        <Route path="/caller" render={props=><Caller {...props} checkSignIn={this.state.signIn}/>} />
-
-        
+        <Route path="/admin/profile" component={AdminProfile}/>
+        <Route path="/adminAddProduct" component={AdminAddProduct} />
+        <Route  path="/about"  render = {props=><About {...props} />} />
+        <Route path="/UserHome" render ={props=><UserHome {...props}/>}/>
         <Route  component={Notexist}/>
         </Switch>
         <Footer/>

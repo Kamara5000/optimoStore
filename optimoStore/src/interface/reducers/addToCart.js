@@ -38,10 +38,10 @@ const addToCart = (state=[], action)=>{
          let product = action.payload;
          let local = JSON.parse(localStorage.getItem("cart"));
          
-            let check =  local.filter((pro,i)=>pro.product_id == product.product_id);
+            let check =  local.filter((pro,i)=>pro.product_id === product.product_id);
 
             if (check.length>0) {
-              local.map((pro,i)=>pro.product_id == product.product_id? pro.count = pro.count+1 : pro);
+              local.map((pro,i)=>pro.product_id === product.product_id? pro.count = pro.count+1 : pro);
             }else{
               local = [...local,product];
             }
@@ -60,10 +60,10 @@ const addToCart = (state=[], action)=>{
    let product = action.payload;
    let local = JSON.parse(localStorage.getItem("cart"));
    
-      let check =  local.filter((pro,i)=>pro.product_id == product.product_id);
+      let check =  local.filter((pro,i)=>pro.product_id === product.product_id);
 
       if (check.length>0) {
-        local.map((pro,i)=>pro.product_id == product.product_id? pro.count = pro.count-1 : pro);
+        local.map((pro,i)=>pro.product_id === product.product_id? pro.count = pro.count-1 : pro);
       }else{
         local = [...local,product];
       }
@@ -79,7 +79,7 @@ const addToCart = (state=[], action)=>{
 }else if (action.type==="DELCART") {
       
             let local = JSON.parse(localStorage.getItem("cart"));
-            let delCart=local.filter((product,index)=>product.product_id != action.payload);
+            let delCart=local.filter((product,index)=>product.product_id !== action.payload);
             
             localStorage.setItem("cart",JSON.stringify(delCart));
 

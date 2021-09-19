@@ -1,11 +1,9 @@
 import {combineReducers} from "redux";
-import myNum from "./num"
-import allGoods from "./allgoods";
-import addProduct from "./addProduct";
+import IsUserLog from "./log";
 import addToCart from './addToCart'
 
 const allReducers = combineReducers({
-    num:myNum, allGoods, addProduct,addToCart
+    log:IsUserLog,addToCart
 })
 
 export default allReducers;

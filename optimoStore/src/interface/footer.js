@@ -11,7 +11,7 @@ const Footer= ()=>{
     <div className="px-4 py-12 mx-auto  overflow-hidden mt-5">
         <nav className="d-flex flex-wrap justify-content-center -mx-5 -my-2">
             <div className="px-5 py-2">
-                <Link to="#" className="text-base leading-6 text-dark">
+                <Link to="/about" className="text-base leading-6 text-dark">
                     About
                 </Link>
             </div>
@@ -42,19 +42,19 @@ const Footer= ()=>{
             </div>
         </nav>
         <div className="d-flex justify-content-center mt-2">
-            <a href="https://www.facebook.com" target="_blank" rel="noreferrer" className="text-lg text-dark">
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="text-lg text-dark">
                 <span className="fa fa-facebook fa-2x"></span>
                 
             </a>
-            <a href="https://www.instagram.com" target="_blank" rel="noreferrer" className=" text-dark text-lg ml-5">
+            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className=" text-dark text-lg ml-5">
                 <span className="fa fa-instagram fa-2x"></span>
                 
             </a>
-            <a href="https://www.twitter.com" target="_blank" rel="noreferrer"  className=" text-dark text-lg ml-5">
+            <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer"  className=" text-dark text-lg ml-5">
                 <span className="fa fa-twitter fa-2x"></span>
                 
             </a>
-            <a href="https://www.github.com" target="_blank"  rel="noreferrer" className=" text-dark text-lg ml-5 hover:text-dark">
+            <a href="https://www.github.com" target="_blank"  rel="noopener noreferrer" className=" text-dark text-lg ml-5 hover:text-dark">
                 <span className="fa fa-github fa-2x"></span>
                 
             </a>

@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {sub} from '../actions/index';
+//import {sub} from '../actions/index';
 import {Link} from 'react-router-dom';
-import UserHoc from '../userHoc';
+import UserHoc from './userHoc';
 
 
 
@@ -90,7 +90,7 @@ const mapStateToProps =state=>{
 
 const addFunctionToRedux=dispatch=>{
     return {
-       mySub: (price)=>dispatch(sub(price)),  
+    //    mySub: (price)=>dispatch(sub(price)),  
           }
 }
 

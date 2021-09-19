@@ -15,7 +15,7 @@ if (isset($request)&& !empty($request)) {
 	// var_dump($data);
 
 	$user_name = $data->username;
-	$user_pass = md5($data->password);
+	$admin_pass = $data->password;
 
 
 
@@ -26,69 +26,51 @@ $conn = mysqli_connect('localhost','root','', 'optimo');
  	};
 
 
- 	$query = "SELECT * FROM admin WHERE admin_username='$user_name' AND admin_password='$user_pass'";
+	$fetch_from_db =$conn->prepare( "SELECT * FROM admin_table WHERE user_name= ?");
+    $b = $fetch_from_db->bind_param('s', $user_name);
+  		$c = $fetch_from_db->execute();
+   		$a = $fetch_from_db->get_result();
+	
+ 		if ($a) {
+			
+			$result= $a->fetch_assoc();
+			//$user = mysqli_fetch_all($result, MYSQLI_ASSOC);
+			$pass = $result["admin_password"];
+			 $verify = password_verify($admin_pass, $pass);
+			 if ($verify) {
+			$response = ["success"=>true, "message"=>"You have succesfully logged in"]; 			
+ 			//echo json_encode($response);
 
-   $result = mysqli_query($conn, $query);
+ 			$query = "SELECT * FROM admin_table WHERE user_name='$user_name'";
 
- 		if (mysqli_num_rows($result)==1) {
- 			// echo "you have succesfully log in";
- 			// $log = mysqli_fetch_all($result, MYSQLI_ASSOC);
- 			// echo json_encode($log);
+ 			$result = mysqli_query($conn, $query);
 
- 			$response = ["success"=>true, "message"=>"You have succesfully logged in"]; 			
- 			echo json_encode($response);
+
+ 			$user = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+ 			array_push($user,$response);
+ 			//var_dump($products);
+
+ 			echo json_encode($user);
+			 }else{
+				$response = ["success"=>false, "message"=>"Invalid Login Details"]; 
+			 
+				$user = [''];
+				array_push($user, $response);			
+				echo json_encode($user);
+			 }
+
+ 			
+
  		}
  		else{
- 			$response = ["success"=>false, "message"=>"Invalid Login Details"]; 			
- 			echo json_encode($response);
+ 			$response = ["success"=>false, "message"=>"Invalid Login Details"]; 
+			 
+			 $user = [''];
+			 array_push($user, $response);			
+ 			echo json_encode($user);
  			// echo json_encode("error");
  		}
- 	//$log = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-
- 			//var_dump($log);
-
- 			//echo json_encode($log);
-
- 	//mysqli_free_result($result);
-
- 	//mysqli_close($conn);
-
-
-	
-
-	
-	
-
-//$request = file_get_contents("php://input");
-
-
-//if (isset($request)&& !empty($request)) {
-	
-	//$data = json_decode($request);
-//	var_dump($data);
-
-	// $p_name = $data->product_name;
-	// $p_price = $data->product_price;
-	// $p_details = $data->product_details;
-	// $p_available = $data->no_available;
-
-	//$con = new mysqli("localhost","root","","optimo") or die("error establishing connection");
-	 //$query = "insert into admin(id,admin_username,admin_password,admin_email) values('', 'ibrahim', md5('ibrahim'), 'muhammedibrahim387@gmail.com');";
-
-	//$res = $con->query($query);
-// 	if($res){
-// 		echo "success";
-// 	}
-
-// 	else {
-// 		echo "error";
-// 	}
-
- };
-	
-
-	
-	
+}
 
 ?>

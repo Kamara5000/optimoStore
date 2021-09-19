@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
 import {connect} from 'react-redux';
-import {add,minus,mycart,mydel} from '../actions/addPro';
-import {sub} from '../actions/index';
+import {add,minus,mydel} from '../actions/addPro';
 import {Link} from 'react-router-dom';
 
 
@@ -146,9 +144,7 @@ const mapStateToProps =state=>{
 }
 
 const addFunctionToRedux=dispatch=>{
-    return {
-       mySub: (price)=>dispatch(sub(price)),
-        
+    return {    
        myAddition: (product)=>dispatch(add(product)),
        myDecrement: (product)=>dispatch(minus(product)),
         delCart: (i)=>dispatch(mydel(i))

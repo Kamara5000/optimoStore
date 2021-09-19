@@ -1,19 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import { Link } from 'react-router-dom'
 import {connect} from 'react-redux'
-import {prod} from '../actions/addPro'
 import {mycart} from '../actions/addPro'
 import axios from 'axios'
-import UserCart from './userCart';
-import {add} from '../actions/index'
 
     
 const UserHome=(props)=>{
   let [myProducts, handleMyProducts] = useState([]);
-  let [show, setShow] = useState(false);
-  let [cart, handleCart]=useState([]);
-  let [total, handleTotal]= useState(0);
-  let [state, setstate] = useState(1);
   let [filter, handleFilter] = useState();
   let [isLoading, handleLoading] = useState(false);
  
@@ -58,17 +50,13 @@ const UserHome=(props)=>{
 
 
 
-const handleClose = ()=>{
-  setShow(false)
-}
-
   const  handleAddToCart=(product,i)=>{
     let local = JSON.parse(localStorage.getItem("cart"));
     product.count=1;
 
     //checking if items are available in the localstorage and if the selected product is not there or not
       if (local) {
-        let check =  local.filter((pro,i)=>pro.product_id == product.product_id);
+        let check =  local.filter((pro,i)=>pro.product_id === product.product_id);
         if (check.length>0) {
           document.getElementById("modalbtn").click()
         }else{
@@ -78,16 +66,8 @@ const handleClose = ()=>{
         props.myC(product);
       }
       const price = Number(product.product_price);
-      props.myTotal(price);
   }
 
-   const handleGoToCart =()=>{
-
-    console.log("my add to cart")
-   // console.log(cart)
-   console.log(cart)
-
-  }
 
     return(
       <React.Fragment>
@@ -149,16 +129,12 @@ const handleClose = ()=>{
     
     const mapStateToProps =state=>{
       return({
-          //myNum:state.num,
           myGoods: state.addProduct
       })
   }
   
   const addFunctionToRedux=dispatch=>{
       return {
-         // mySubtraction: ()=>dispatch(sub()),
-          myTotal: (price)=>dispatch(add(price)),
-         // myMul: ()=>dispatch(multi()),
           myC: (product)=>dispatch(mycart(product))
             }
   }

@@ -1,43 +1,36 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import UserLog from './userLog'
+import UserLog from './userLog';
+import { useHistory } from 'react-router';
 
 const UserReg=(props)=>{
-    
-    let [myVal, handleMyVal] = useState(3);
-    let [name, changeName] = useState("AYO");
-    let [userReg, handleUserReg] = ('')
 
+    let [userReg, handleUserReg] = useState('')
+    let [uname, setUserName] = useState('');
+    let [fName, setFirstName] = useState('');
+    let [lName, setLastName] = useState('');
+    let [address, setAddress] = useState('');
+    let [pass, setPass]= useState('');
+    let [isEmpty, setEmpty] = useState(false);
+    let [isRegister, setRegister] = useState(false);
 
-    let x,k,y,z,p,s;
-
-    const editName =()=>{
-        changeName("Wumi")
-    }
-
-    const clickMe=()=>{
-        handleMyVal(myVal+1)
-    }
-    
-    useEffect(()=>{
-        console.log("hello");
-    }, [myVal]
-
-    )
+    const history = useHistory();
 
         const handleSubmit=(e)=>{
             e.preventDefault();
-            
-                  let m = new FormData();
-                m.append("userName",p);
-                m.append("f_name",  x);
-                m.append("l_name",z);
-                m.append("user_address",y);
-                m.append("user_password",k);
-                m.append('submit',s);
+
+            if (pass === '' || uname === '' || fName === '' || lName === '' || address === '' ) {
+                return setEmpty(true);
+            }
+                let m = new FormData();
+                m.append("userName",uname);
+                m.append("f_name",  fName);
+                m.append("l_name",lName);
+                m.append("user_address",address);
+                m.append("user_password",pass);
                 
                 console.log(m)
-         //axios.post('//localhost:80/react/optimoBackend/adminpost.php',m)
+         axios.post('//localhost:80/react/optimoBackend/adminpost.php',m)
             axios({
             method: "post",
             url: "//localhost:80/react/optimobackend/userReg.php",
@@ -47,8 +40,17 @@ const UserReg=(props)=>{
              }, })
         
         .then(response=>{console.log(response.data); 
-            handleReg(response.data);
-          
+            
+            if(response.data.success){
+                history.push("/UserReg");
+                setRegister(true);
+                setEmpty(false);
+            }else if(!response.data.success){
+                console.log('unable to success register');
+            }else if(response.data.invalid){
+                console.log("user already exist please choose another username")
+            }
+            
         }
         )
         .catch(err=>console.log(err));
@@ -63,51 +65,35 @@ const UserReg=(props)=>{
             let checklname= event.target.name==="lName";
             let checkAddress = event.target.name==="userAddress";
             let checkPass = event.target.name==="userPass";
-            let checksub = event.target.name ==="submit"
             if (checkName) {
-                 p= (event.target.value);
-                //handleProName(x);
+                 setUserName(event.target.value);
+                //handlProName(x);
               //console.log(x)  
             }
     
             else if (checkFname) {
-                 x = (event.target.value);
+                 setFirstName(event.target.value);
             
                 
             }
             else if (checklname) {
-                z = (event.target.value);
+                setLastName(event.target.value);
                
            }
     
     
             else if(checkAddress) {
-                 y = (event.target.value);
+                 setAddress(event.target.value);
     
             }
 
             else if(checkPass){
-                k= (event.target.value);
+                setPass(event.target.value);
             }
-            else if(checksub){
-                s= (event.target.name);
-            }
+            
         
         }
-       
-        const handleReg=(log)=>{
-            console.log('this is mylog')
-          console.log(log);
-            if (log.invalid) {
-                alert(log.message)
-            }
-            else if (log.success) {
-                alert(log.message);
-            }else if(!log.success){
-                alert(log.message)
-            }  
-        
-    }
+    
 
     console.log(props)
     return(
@@ -121,6 +107,8 @@ const UserReg=(props)=>{
                     <div className="card">
                         <div className="card-body">
                         <h5 className="card-title">Register</h5>
+                        {isEmpty && <p className="text-danger text-center card-text p-2">Fill all field to register</p>}
+                        {isRegister && <p className="text-success text-center card-text p-2">You have succesfully register sign in to proceed</p>}
                         <form className="form-group" >
                                 <input type="text" className="form-control m-2 " name="fName" onChange={handleSet} placeholder="Enter your First Name" />
                                 <input type="text" className="form-control m-2 " name="lName" onChange={handleSet} placeholder="Enter your last Name" />          

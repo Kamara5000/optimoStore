@@ -25,18 +25,21 @@ $conn = mysqli_connect('localhost','root','', 'optimo');
  		echo "Failed to connect to Database". mysqli_connect_errno();
  	};
 
-
- 	$query = "SELECT * FROM users WHERE user_name='$user_name' AND user_password='$user_pass'";
-
-   $result = mysqli_query($conn, $query);
-
- 		if (mysqli_num_rows($result)==1) {
- 			// echo "you have succesfully log in";
- 			// $log = mysqli_fetch_all($result, MYSQLI_ASSOC);
- 			// echo json_encode($log);
-
-
- 			$response = ["success"=>true, "message"=>"You have succesfully logged in"]; 			
+	
+	$query = "SELECT * FROM users WHERE user_name='$user_name'";
+	$fetch_from_db =$conn->prepare( "SELECT * FROM users WHERE user_name= ?");
+    $b = $fetch_from_db->bind_param('s', $user_name);
+  		$c = $fetch_from_db->execute();
+   		$a = $fetch_from_db->get_result();
+	
+ 		if ($a) {
+			
+			$result= $a->fetch_assoc();
+			//$user = mysqli_fetch_all($result, MYSQLI_ASSOC);
+			$pass = $result['user_password'];
+			 $verify = password_verify($user_pass, $pass);
+			 if ($verify) {
+			$response = ["success"=>true, "message"=>"You have succesfully logged in"]; 			
  			//echo json_encode($response);
 
  			$query = "SELECT * FROM users WHERE user_name='$user_name'";
@@ -44,17 +47,29 @@ $conn = mysqli_connect('localhost','root','', 'optimo');
  			$result = mysqli_query($conn, $query);
 
 
- 			$products = mysqli_fetch_all($result, MYSQLI_ASSOC);
+ 			$user = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
- 			array_push($products,$response);
+ 			array_push($user,$response);
  			//var_dump($products);
 
- 			echo json_encode($products);
+ 			echo json_encode($user);
+			 }else{
+				$response = ["success"=>false, "message"=>"Invalid Login Details"]; 
+			 
+				$user = [''];
+				array_push($user, $response);			
+				echo json_encode($user);
+			 }
+
+ 			
 
  		}
  		else{
- 			$response = ["success"=>false, "message"=>"Invalid Login Details"]; 			
- 			echo json_encode($response);
+ 			$response = ["success"=>false, "message"=>"Invalid Login Details"]; 
+			 
+			 $user = [''];
+			 array_push($user, $response);			
+ 			echo json_encode($user);
  			// echo json_encode("error");
  		}
 }

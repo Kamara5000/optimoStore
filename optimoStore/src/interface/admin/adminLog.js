@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import axios from 'axios';
-import myHoc from '../hoc';
+import adminHoc from './adminHoc';
 import AdminNavBar from './adminNavBar';
 import AdminDash from './adminDash'; 
 import AdminReg from './adminReg';
@@ -39,7 +39,7 @@ const AdminLog=(props)=>{
       </React.Fragment>
   )
 }
-export default myHoc(AdminLog);
+export default adminHoc(AdminLog);
 
 
 

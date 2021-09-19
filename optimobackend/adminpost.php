@@ -34,15 +34,7 @@ $uploads ="uploads/";
 $movefile = move_uploaded_file($b, $uploads.$fn);
 
 	if ($movefile) {
-		echo "file moved successfulu";
-	}
-
-	else{
-		echo "error";
-	}
-
-
-	$con = new mysqli("localhost","root","","optimo") or die("error establishing connection");
+		$con = new mysqli("localhost","root","","optimo") or die("error establishing connection");
 	 $query = "insert into adminpost(product_name,product_price,product_available,product_details,product_image_name) values('$p_name', '$p_price', '$p_available', '$p_details', '$fn');";
 
 	$res = $con->query($query);
@@ -53,6 +45,14 @@ $movefile = move_uploaded_file($b, $uploads.$fn);
 	else {
 		echo "error";
 	}
+	}
+
+	else{
+		echo "error";
+	}
+
+
+	
 
 }
 	

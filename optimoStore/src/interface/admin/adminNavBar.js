@@ -5,37 +5,56 @@ import axios from 'axios'
 const AdminNavBar=(props)=>{
   
   const logOut=()=>{
-      localStorage.removeItem("log");
-      props.history.push('/adminReg');
+      localStorage.removeItem("adminLog");
+      localStorage.removeItem("admin");
   }
 
 
- return(
+return(
       <React.Fragment>
+       
+        
+        {/* style={{position:'fixed', width:'100%', height: '100%', position: 'relative'}} */}
 
-<h1>
-<nav className="navbar navbar-expand-lg navbar-light bg-light">
-  <Link className="navbar-brand" to="/AdminLog">Admin Home</Link>
+<div className="side-nav "style={{position:'fixed', width:'100%', height: '100%', position: 'relative'}}  >
+        <div className="">
+          <ul style={{listStyleType:"none"}}>
 
-  <div className="collapse navbar-collapse" id="navbarNav">
-  <ul className="navbar-nav">
-   <li className="nav-item active">
-      <Link className="nav-link" to="/adminLog/adminDash">Add Product</Link>
-    </li>
-    <li className="nav-item">
-      <Link className="nav-link" to="/adminLog/adminReg">Register</Link>
-    </li>
-    <li className="nav-item">
-      <Link className="nav-link" to="">Profile</Link>
-    </li>
-    <li className="nav-item">
-      <Link className="nav-link" to="">Orders</Link>
-    </li>
-    </ul>
-    </div>
-    </nav>
-
-</h1>
+              <li>
+                <Link className="nav-link"     to="/admin/home" style={{padding:'0',margin:'0',maxWidth: "100%"}}>
+                    <button type="button" className="btn btn-sm   btn-basic hover-item" style={{height:'50px',maxWidth: "100%",borderRadius:"50px", fontSize:"23px"}}>
+                       <i className="fa fa-home mr-4 " ></i>
+                        Admin Home
+                    </button>
+                  </Link>
+                </li>
+                <li>
+                  <Link className="nav-link"    to="/adminAddProduct" style={{padding:'0',margin:'0',maxWidth: "100%"}}>
+                    <button type="button" className="btn btn-sm   btn-basic hover-item" style={{height:'50px',maxWidth: "100%",borderRadius:"50px", fontSize:"23px"}}>
+                       <i className="fa fa-plus mr-4 " ></i>
+                        Add Product
+                    </button>
+                  </Link>
+                </li>
+                <li>
+                  <Link className="nav-link"     to="/admin/profile" style={{padding:'0',margin:'0',maxWidth: "100%"}}>
+                    <button type="button" className="btn btn-sm   btn-basic hover-item" style={{height:'50px',maxWidth: "100%",borderRadius:"50px", fontSize:"23px"}}>
+                       <i className="fa fa-user-circle mr-4 " ></i>
+                        Admin Profile
+                    </button>
+                  </Link>
+                </li>
+                <li>
+                  <Link className="nav-link"     to="/admin/Home" style={{padding:'0',margin:'0',maxWidth: "100%"}}>
+                    <button onClick={logOut} type="button" className="btn btn-sm   btn-basic hover-item" style={{height:'50px',maxWidth: "100%",borderRadius:"50px", fontSize:"23px"}}>
+                       <i className="fa fa-sign-out mr-4 " ></i>
+                       Log Out
+                    </button>
+                  </Link>
+                </li>
+            </ul>
+        </div>    
+      </div>
 
 
 

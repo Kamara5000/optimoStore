@@ -7,7 +7,6 @@ function UserHoc(IncomingComponent){
             super(props);
         } 
 
-        anything = "Ayo"
         render(){
 
             let check = JSON.parse(localStorage.getItem("userLog"));
@@ -15,10 +14,11 @@ function UserHoc(IncomingComponent){
                 <React.Fragment>
                     <div>
                     {check?
-                     <IncomingComponent {...this.props}  any={this.anything}  />: 
-                    <div><h1>Please log in to proceed to check out and your orders or Register if 
-                    you are not an Already existing User <div><Link to="/UserReg">
-                    <button className="btn btn-warning">Log In</button></Link></div></h1> </div> }
+                     <IncomingComponent {...this.props}/>: 
+                    <div style={{marginTop:"7rem", textAlign:"center"}}><h1>Please 
+                        <Link to="/UserReg"> <button className="btn btn-warning">Sign In</button></Link> to proceed to check out and your orders or 
+                        <Link to="/UserReg"> <button className="btn btn-warning">Sign Up</button></Link> if 
+                        you are not an  existing User</h1> </div> }
                     </div>
                 
                 

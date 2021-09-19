@@ -1,41 +1,16 @@
-export const add = (num)=>{
+export const logOut = ()=>{
     return (
         {
-            type : "ADDITION",
-            payload : num
+            type : "USERLOGOUT",
         }
     )
 }
 
-export const sub = (price)=>{
+export const logIn = ()=>{
     return(
         {
-            type: "SUBTRACTION",
-            payload: price,
+            type: "USERLOGIN",
         }
     )
 }
 
-export const dub = (mul)=>{
-    return(
-        {
-            type: "DOUBLE",
-            payload : mul
-        }
-    )
-}
-
-export const multi = (val)=>{
-    return{
-        type: "MANI",
-        payload: val
-    }
-}
-
-
-export const pusher =(val)=>{
-    return{
-        type: "pushing",
-        payload: val
-    }
-}

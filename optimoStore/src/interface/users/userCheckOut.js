@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import UserHoc from '../userHoc';
+import UserHoc from './userHoc';
 import { Link, useHistory } from 'react-router-dom';
 import {clear} from '../actions/addPro';
 import {connect} from 'react-redux';

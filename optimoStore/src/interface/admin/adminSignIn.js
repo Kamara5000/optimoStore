@@ -1,10 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router';
-import {connect} from 'react-redux';
-import { logIn } from '../actions';
 
-const UserLog=(props)=>{
+const AdminSignIn=(props)=>{
     let [pass, setPass] = useState('');
     let [user,setUser] = useState('');
     let [isEmpty,setEmpty] = useState(false);
@@ -40,19 +38,17 @@ const UserLog=(props)=>{
 
         console.log(m)
             
-        axios.post('//localhost:80/react/optimoBackend/userLog.php',m)
+        axios.post('//localhost:80/react/optimoBackend/adminlog.php',m)
         .then(response=>{console.log(response.data); 
                 let {success} = response.data[1];
                 if(success === true) {
                     //alert(success)
 
-                localStorage.setItem("userLog",JSON.stringify(true));
-                localStorage.setItem('user',JSON.stringify(response.data[0]));
-                history.push('/UserCart');
-                props.userLogIn();
+                localStorage.setItem("adminLog",JSON.stringify(true));
+                localStorage.setItem('admin',JSON.stringify(response.data[0]));
+                    history.push('/admin/home');
 
-
-                }else if(success === false) {
+                }else if(!success) {
                     setInvalid(true);
                     setEmpty(false);
                 }
@@ -78,19 +74,4 @@ const UserLog=(props)=>{
    </React.Fragment>
     )
 }
-
-const mapStateToProps =state=>{
-    return({
-        log:state.log,
-        myGoods: state.addToCart
-    })
-  }
-  
-  const addFunctionToRedux=dispatch=>{
-    return {
-       userLogIn: ()=>dispatch(logIn())
-          }
-  }
-  
-  
-export default connect(mapStateToProps, addFunctionToRedux)(UserLog);
+export default AdminSignIn;

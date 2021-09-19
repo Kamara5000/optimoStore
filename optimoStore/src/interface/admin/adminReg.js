@@ -1,231 +1,141 @@
 import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom'
-import axios from 'axios'
-
+import axios from 'axios';
+import { useHistory } from 'react-router';
+import AdminSignIn from './adminSignIn';
 
 const AdminReg=(props)=>{
-    let pass,user;
-    let [myVal, handleMyVal] = useState(3);
-    let [name, changeName] = useState("AYO");
-    //let [myLog, handleMyLog] = useState("")
 
-    const editName =()=>{
-        changeName("Wumi")
-    }
+    let [userReg, handleUserReg] = useState('')
+    let [uname, setUserName] = useState('');
+    let [fName, setFirstName] = useState('');
+    let [lName, setLastName] = useState('');
+    let [address, setAddress] = useState('');
+    let [pass, setPass]= useState('');
+    let [isEmpty, setEmpty] = useState(false);
+    let [isRegister, setRegister] = useState(false);
+    let [adminExist, setExist] = useState(false);
 
-    const clickMe=()=>{
-        handleMyVal(myVal+1)
-    }
-    
-    useEffect(()=>{
-        console.log("hello");
-    }, [myVal]
+    const history = useHistory();
 
-    )
+        const handleSubmit=(e)=>{
+            e.preventDefault();
 
-   
-    
-    console.log(props);
-    
-
-    const handleSet=(event)=>{
-        let username = event.target.name==="username";
-        let password = event.target.name==="password";
-        if (password) {
-             pass = (event.target.value);
-           // handleProduct({...pro,price:x})
-          //console.log(pass)  
-        }
-
-        else if (username) {
-             user = (event.target.value);
-           // handleProduct({...pro,noAv:k})
-            //console.log(k)
-        }
-    }
-
-    const handleSubmit=(e)=>{
-        e.preventDefault();
-            const m = {
-               password: pass,
-               username: user,
-        };
-        console.log(m);
-            
-        axios.post('//localhost:80/react/optimoBackend/adminlog.php',m)
+            if (pass === '' || uname === '' || fName === '' || lName === '' || address === '' ) {
+                return setEmpty(true);
+            }
+                let m = new FormData();
+                m.append("userName",uname);
+                m.append("f_name",  fName);
+                m.append("l_name",lName);
+                m.append("user_address",address);
+                m.append("user_password",pass);
+                
+                console.log(m)
+            axios({
+            method: "post",
+            url: "//localhost:80/react/optimobackend/adminReg.php",
+            data: m,
+            headers: { 
+                'Content-Type': 'multipart/form-data'
+             }, })
+        
         .then(response=>{console.log(response.data); 
-            //handleCheck(response.data);
-             //handleMyLog(response.data);
-             handleCheck(response.data);
-
-        }
             
-    )
-        .catch(err=>console.log(err));
-    }
-
-    const handleCheck=(log)=>{
-            console.log('this is mylog')
-          console.log(log);
-
+            if(response.data.success === true){
+                setRegister(true);
+                setEmpty(false);
+                console.log('successfully register');
+            }else if(response.data.success === false){
+                console.log('unable to successfully register');
+            }else if(response.data.invalid === true){
+                console.log("user already exist please choose another username");
+                setExist(true);
+                setRegister(false);
+                setEmpty(false);
+            }
           
-
-           if (log.success) {
-               alert(log.message);
-
-               localStorage.setItem("log",JSON.stringify(true));
-               props.history.push('/adminLog');
-           }else if(!log.success){
-               alert(log.message)
+        }
+        )
+        .catch(err=>console.log(err));
+    
+            
+       
+    };
+        
+       const handleSet=(event)=>{
+            let checkName= event.target.name==="userName";
+            let checkFname= event.target.name==="fName";
+            let checklname= event.target.name==="lName";
+            let checkAddress = event.target.name==="userAddress";
+            let checkPass = event.target.name==="userPass";
+            if (checkName) {
+                 setUserName(event.target.value);
+                //handlProName(x);
+              //console.log(x)  
+            }
+    
+            else if (checkFname) {
+                 setFirstName(event.target.value);
+            
+                
+            }
+            else if (checklname) {
+                setLastName(event.target.value);
+               
            }
+    
+    
+            else if(checkAddress) {
+                 setAddress(event.target.value);
+    
+            }
 
-    }
+            else if(checkPass){
+                setPass(event.target.value);
+            }
+            
+        
+        }
+       
 
+    //console.log(props)
     return(
         <React.Fragment>
-   <h1>Welcome  Please Log In In To Acess The Admin Dashboard</h1>         
-<form>
-    <div className="form-group">
-    <label >Username</label>
-    <input type="text" name="username" placeholder="Enter your username"
-     className="form-control w-25" onChange={handleSet}/>
-    
-    </div>
-     <div className="form-group">
-    <label >Password</label>
-    <input type="password" name="password" placeholder="Enter your password" 
-    className="form-control w-25" onChange={handleSet}/>
-    <small id="emailHelp" className="form-text text-muted">We'll never share your password with anyone else.</small>
-  </div>
-  <button type="submit"  className="btn btn-primary" onClick={handleSubmit} >Log In</button>
-  
-  </form>
+            <div className="container-fluid px-5" style={{marginTop: '7rem'}}>
+                <h2 className="text-md-center mb-5">Create An Admin Account or Log In </h2>
+            <div className="row ml-md-5 ">
+                <div className="col-sm-4 ml-md-5">
+                    <AdminSignIn {...props}/>
+                </div>
+                <div className="col-sm-4 ml-md-5" style={{ marginTop:'70px'}} >
+                    <div className="card">
+                        <div className="card-body">
+                        <h5 className="card-title">Register</h5>
+                        {isEmpty && <p className="text-danger text-center card-text p-2">Fill all field to register</p>}
+                        {isRegister && <p className="text-success text-center card-text p-2">You have succesfully register sign in to proceed</p>}
+                        {adminExist && <p className="text-danger text-center card-text p-2">Admin with the username already exist</p>}
+                        <form className="form-group" >
+                                <input type="text" className="form-control m-2 " name="fName" onChange={handleSet} placeholder="Enter your First Name" />
+                                <input type="text" className="form-control m-2 " name="lName" onChange={handleSet} placeholder="Enter your last Name" />          
+                                <input type="text" className="form-control m-2 " name="userName" onChange={handleSet} placeholder="Enter Username" />
+                                <input type="text" className="form-control m-2 " name="userAddress" onChange={handleSet} placeholder="Enter a valid address" />
+                                <input type="password" className="form-control m-2 " name="userPass" onChange={handleSet} placeholder="Enter password" />
+                                <button type="submit" name="submit" className="btn btn-primary m-2" onClick={handleSubmit} >Register</button> 
+                       
+                        </form>
+                                </div>
 
-{/* <button   className="btn btn-primary" onClick={()=>handleCheck('/adminLog')}>check if log</button> */}
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            </div>
+            
     
-  
         </React.Fragment>
     )
 }
 export default AdminReg;
-
-
-
-
-
-
-
-
-
-// import React, {Component} from 'react';
-// //import myHoc from "./hoc";
-// import {useSelector,useDispatch} from 'react-redux'
-// import {withFormik, Form, Field, ErrorMessage} from 'formik'
-// import *as Yup from "yup";
-// import Axios from 'axios';
-// class AdminReg extends Component{
-
-//     componentWillUnmount(){
-//         alert("dont remove me")
-//     }
-
-//     componentDidMount(){
-//         console.log("how it works page")
-//     }
-
-//     componentDidUpdate(){
-//         console.log("i have been updated")
-//     }
-
-//     state = {
-//         details:[
-
-//             {name:"firstName", className:"form-control", width:"50px" ,placeholder:"input your first name"},
-//             {name:"lastName", className:"form-control", placeholder:"input your last name"},
-//             {name:"email", className:"form-control",placeholder:"enter your email"},
-//             {name:"password", className:"form-control", placeholder:"enter password", type:"password" }
-//         ]
-//      }
-
-     
-        
-//     render() {
-        
-//         // const image = require('../../../../optimobackend/uploads/shirt.jpeg')
-//         //<img src={require('../../../../optimobackend/uploads/shirt.jpg')} alt="an image" />
-                
-     
-//         let {myName} = this.props;
-//         return (
-             
-//              <React.Fragment>
-//                    <div>Welcome back Admin</div> 
-//                 <Form>
-//                     <div className="form-group" >
-//                     {/* <Field name="firstName" placeholder="input first name" />
-//                     <ErrorMessage name="firstName"/>
-//                     <Field name="lastName" placeholder="input your last name" />
-//                     <ErrorMessage name="lastName"/>
-//                     <Field name="email" placeholder="input your email" />
-//                     <ErrorMessage name="email"/>
-//                     <Field  name="password" placeholder="input password" />
-//                     <button type="submit" >submit form</button> 
-//                      */}
-//                     {this.props.status}
-//                      {this.state.details.map((detail,i)=>(
-//                                 <div key={i}>
-//                                     <Field {...detail} />
-//                                     <ErrorMessage name={detail.name}/>
-
-//                                 </div>
-//                      ))
-
-//                      }
-//                             <button type="Submit" className="btn btn-primary" >submit form</button>
-//                             </div>
-                            
-//                     </Form> 
-                                  
-//             </React.Fragment>
-//         );
-//     }
-// }
-
-
-
-// export default withFormik({
-//     mapPropsToValues:()=>({
-//         firstName : "",
-//         lastName : "",
-//         email: "",
-//         password: "" 
-//     }),
-
-//     validationSchema: Yup.object().shape({
-//         firstName:  Yup.string().required("Firstname is required"),
-//         email: Yup.string().required("email is required").email("input a valid email"),
-//         password: Yup.string().required("password is required")
-//     }),
-
-//         handleSubmit(values, {props, ...actions }){
-//             console.log(actions);
-        
-         
-//         Axios({
-//             method: "post",
-//             url: "//localhost:80/react/myappbackend/result.php",
-//             data: values,
-//             headers: { 
-//                 'Content-Type': 'application/x-www-form-urlencoded'
-//              },
-            
-//         }).then(val=>actions.setStatus(val.data)
-
-        
-//         )
-//         .catch(err=>console.log(err));
-//     }
-
-
-
-// })(AdminReg);

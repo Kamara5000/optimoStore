@@ -2,16 +2,14 @@ import React, {Component} from 'react';
 
 
 class Notexist extends Component {
-    stae= { }
-
+   
     render(){
-        let {myVal} = this.props;
         return(
 
             
             <React.Fragment>
                 
-                TGHIS PAGE DOES NOT EXIST
+                <h3 style={{marginTop:"10rem", textAlign:"center"}}>THIS PAGE DOES NOT EXIST</h3>
             </React.Fragment>
         );
     }

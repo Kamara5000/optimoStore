@@ -2,3 +2,16 @@
 .active{
   color: #fff;
 }
+
+.hover-item {
+	background-color: #FFF;
+}
+
+.hover-item:hover {
+	background-color: #EAEDED;
+  color: #FFF;
+}
+
+.hover-item:focus{
+  box-shadow: none;
+}
